@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, send_file, request, Response
 import os
 import time
 import mimetypes
+import shutil 
 from .config import BASE_DIR
 
 file_routes = Blueprint("file_routes", __name__)
@@ -69,20 +70,26 @@ def upload_file():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
-@file_routes.route('/delete/<filename>', methods=['DELETE'])
+@file_routes.route('/delete/<path:filename>', methods=['DELETE'])
 def delete_file(filename):
-    """Deletes a file"""
+    """Delete a file or folder recursively."""
     file_path = os.path.join(BASE_DIR, filename)
 
     if not os.path.exists(file_path):
-        return jsonify({"error": "File not found"}), 404
+        return jsonify({"error": "File or folder not found"}), 404
 
     try:
-        os.remove(file_path)
-        return jsonify({"message": "File deleted successfully", "filename": filename})
+        if os.path.isdir(file_path):
+            # 🔥 Recursively delete folder
+            shutil.rmtree(file_path)
+            return jsonify({"message": f"Folder '{filename}' deleted successfully."})
+        else:
+            # 🗑️ Delete file
+            os.remove(file_path)
+            return jsonify({"message": f"File '{filename}' deleted successfully."})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 @file_routes.route('/move', methods=['POST'])
 def move_file():
