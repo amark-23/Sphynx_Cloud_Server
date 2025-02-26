@@ -17,9 +17,23 @@ class ApiService {
     }
   }
 
-  /// Delete a file
-  Future<bool> deleteFile(String filePath) async {
-    final response = await http.delete(Uri.parse('$baseUrl/delete/$filePath'));
-    return response.statusCode == 200;
+  /// Delete file or folder
+  Future<bool> deleteFile(String filename) async {
+    try {
+      final response = await http.delete(
+        Uri.parse('$baseUrl/delete/$filename'),
+      );
+
+      if (response.statusCode == 200) {
+        print("Deleted successfully: $filename");
+        return true;
+      } else {
+        print("Failed to delete: ${response.body}");
+        return false;
+      }
+    } catch (e) {
+      print("Error deleting file or folder: $e");
+      return false;
+    }
   }
 }
