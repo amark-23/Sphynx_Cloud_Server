@@ -3,11 +3,13 @@ import '../services/api_service.dart';
 
 class DeleteButton extends StatelessWidget {
   final String fileName;
+  final bool isFolder;
   final Function onDeleteSuccess;
 
   const DeleteButton({
     Key? key,
     required this.fileName,
+    required this.isFolder,
     required this.onDeleteSuccess,
   }) : super(key: key);
 
@@ -16,8 +18,8 @@ class DeleteButton extends StatelessWidget {
       context: context,
       builder:
           (context) => AlertDialog(
-            title: Text("Delete $fileName?"),
-            content: const Text("Are you sure you want to delete this file?"),
+            title: Text("Delete ${isFolder ? 'Folder' : 'File'}?"),
+            content: Text("Are you sure you want to delete '${fileName}'?"),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
@@ -28,9 +30,20 @@ class DeleteButton extends StatelessWidget {
                   bool success = await ApiService().deleteFile(fileName);
                   if (success) {
                     onDeleteSuccess();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          "${isFolder ? 'Folder' : 'File'} deleted successfully!",
+                        ),
+                      ),
+                    );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Failed to delete file.")),
+                      SnackBar(
+                        content: Text(
+                          "Failed to delete ${isFolder ? 'folder' : 'file'}.",
+                        ),
+                      ),
                     );
                   }
                   Navigator.pop(context);
@@ -53,3 +66,4 @@ class DeleteButton extends StatelessWidget {
     );
   }
 }
+
