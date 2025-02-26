@@ -74,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
           // ❌ Delete button
           DeleteButton(
             fileName: item.name,
+            isFolder: item.isFolder,
             onDeleteSuccess: () => fetchFiles(folder: currentFolder),
           ),
         ],
