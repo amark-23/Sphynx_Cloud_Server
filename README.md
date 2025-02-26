@@ -1,6 +1,6 @@
 # Sphynx File Server
 
-Sphynx is an attempt at a **home file server implementation** using a **REST API** (Flask) and a **Flutter-based** frontend.
+Sphynx is an attempt at a **cross-platform mobile and desktop Flutter-based application** for managing personal file storage through a custom backend. It works like a private Google Drive, connecting to your Ubuntu server using a **RESTful API** (Flask).
 
 ## **🚀 Features**
 - 📂 **File Management**: Upload, download, rename, delete, move files  
