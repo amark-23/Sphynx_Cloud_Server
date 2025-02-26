@@ -31,7 +31,6 @@ Ensure the **backend API** is running for full functionality.
 
 ## 📸 **Screenshots**
 ![image](https://github.com/user-attachments/assets/c74fb48c-73d1-45b7-9804-6a2561510a4b)
-![image](https://github.com/user-attachments/assets/c71bdc5b-e2b9-422d-85db-5e55a3aa8661)
 
 
 
